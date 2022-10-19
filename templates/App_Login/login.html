@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} {{title}} {% endblock %}
+{% block css_block %}
+{%load static%}
+
+
+<style>
+  .sign_up {
+    width: 550px;
+    border: 1px solid #ccc;
+    padding: 25px;
+  }
+  .log_in {
+    width: 550px;
+    padding: 40px;
+    border: 1px solid #ccc;
+  }
+</style>
+{% endblock %}
+{% block body_block %}
+<head>
+  <link rel="stylesheet" media="screen" href="{%static 'css/style.css'%}">
+</head>
+<body id="pics" style="background-image:url('{%static 'img/uap14.jpg'%}');">
+  <center >
+<div>
+  <br><br>
+  <h1 class="wht">Educational media of "University of Asia Pacific" </h1>
+  <br><br>
+</div>
+<div>
+  <div class="log_in  wht">
+    <form method="POST">
+      {{form|crispy}}
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary" style="width:100%">Log In</button>
+    </form>
+  </div>
+  <br>
+  <div class="sign_up">
+    <h5 class="wht"> <b> Don't have an account?</b> <a href="{% url 'App_Login:sign_up' %}"> <br> <b class="wht">Sign up</b> </a></h5>
+  </div>
+</div>
+
+</center>
+
+</body>
+
+{% endblock %}
