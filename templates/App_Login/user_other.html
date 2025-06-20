@@ -42,12 +42,47 @@
 <hr>
 <br>
 <br>
-<div class="row">
-  {% for post in user_other.post.all %}
-  <div class="crop">
-    <img src="/media/{{post.image}}" title="{{post.caption}}">
-  </div>
 
-  {% endfor %}
+<!-- Showing Posts -->
+<div class="row">
+  <div class="col-sm-8">
+    {% for post in  user_other.post.all %}
+      <div style="border: 1px solid #888888">
+        <img src="/media/{{ post.image }}" width="100%" title="{{ post.caption }}">
+        <div style="padding: 20px">
+          {{ post.caption }}<br />
+          <div class="d-flex ">
+            {% if post.pk in liked_post_list %}
+              <a href="{% url 'App_Posts:unliked' pk=post.pk %}">
+                <i class="fa fa-heart" style="font-size: 36px"></i>
+              </a>
+            {% else %}
+              <a href="{% url 'App_Posts:liked' pk=post.pk %}">
+                <i class="fa fa-heart-o" style="font-size: 36px"></i>
+              </a>
+            {% endif %}
+            <p class="mx-3"> {{ post.liked_post.count }} Likes </p>
+          </div>
+          
+        </div>
+
+        <!-- Comments Section -->
+        <div style="padding: 20px; border-top: 1px solid #ccc">
+          <strong>Comments:</strong>
+          <ul>
+            {% for comment in post.comments.all %}
+              <li><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</li>
+            {% empty %}
+              <li>No comments yet.</li>
+            {% endfor %}
+          </ul>
+
+        </div>
+
+      </div>
+      <br><br>
+    {% endfor %}
+  </div>
 </div>
+<!-- End Showing Posts -->
 {% endblock %}
